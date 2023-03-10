@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异步顺序</title>
+</head>
+
+<body>
+    <script>
+        console.log(1)
+
+        setTimeout(() => {
+            console.log(2)
+            Promise.resolve().then(() => {
+                console.log(3)
+            })
+
+            setTimeout(() => {
+                console.log(4)
+            }, 0)
+        }, 0)
+
+        new Promise((resolve) => {
+            console.log(5)
+            resolve(6)
+        }).then((data) => {
+            console.log(data)
+            data = 7;
+        }).then((data) => {
+            console.log(data)
+        })
+
+        setTimeout(() => {
+            console.log(8)
+        }, 0)
+
+        console.log(9)
+
+        // 1 9 5 6 undefind 2 3 8 4
+    </script>
+</body>
+
+</html>
